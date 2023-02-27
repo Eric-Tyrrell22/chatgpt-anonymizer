@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>ChatGPT Anonymizer</title>
+  </head>
+  <body>
+    <h1>ChatGPT Anonymizer</h1>
+    <p>Enter the text you want to anonymize below:</p>
+    <form id="anonymize-form">
+      <textarea id="input-text" rows="10" cols="80"></textarea>
+      <br>
+      <button type="submit">Anonymize</button>
+    </form>
+    <div id="output"></div>
+		<img src="spinner.png">
+    <div id="spinner" style="display:none">
+      <img src="spinner.png">
+      <p>Anonymizing...</p>
+    </div>
+    <div id="error" style="display:none">
+      <p>Sorry, something went wrong. Please try again later.</p>
+    </div>
+    <script>
+      const form = document.getElementById("anonymize-form");
+      const inputText = document.getElementById("input-text");
+      const outputDiv = document.getElementById("output");
+      const spinnerDiv = document.getElementById("spinner");
+      const errorDiv = document.getElementById("error");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        outputDiv.innerHTML = "";
+        errorDiv.style.display = "none";
+        spinnerDiv.style.display = "block";
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({text: inputText.value})
+        };
+        fetch("/api/chatgpt", requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            outputDiv.innerHTML = data.text;
+          })
+          .catch(error => {
+            console.error(error);
+            errorDiv.style.display = "block";
+          })
+          .finally(() => {
+            spinnerDiv.style.display = "none";
+          });
+      });
+    </script>
+  </body>
+</html>
