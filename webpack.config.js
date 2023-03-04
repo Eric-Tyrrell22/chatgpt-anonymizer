@@ -1,7 +1,7 @@
 module.exports = {
   entry: './src/lambda/index.js',
   output: {
-    filename: '[name].js',
+    filename: 'index.js',
     path: __dirname + '/dist',
 		libraryTarget: 'commonjs2'
   },

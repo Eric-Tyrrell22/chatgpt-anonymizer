@@ -11,5 +11,6 @@ const secret = await client.send(command);
 
 export const handler = async(event) => {
     // probably rerturn an error here if failed to get secret.
-    return anonymizeText( event.text, secret?.SecretString?.OPEN_AI_KEY );
+	const secret_obj = JSON.parse( secret.SecretString);
+	return anonymizeText( event.text, secret_obj.OPEN_AI_API_KEY );
 };
