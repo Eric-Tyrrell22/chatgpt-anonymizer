@@ -1,1 +1,3 @@
 src/.env
+dist/*
+lambda_function.zip
